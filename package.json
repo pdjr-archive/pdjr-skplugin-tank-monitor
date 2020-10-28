@@ -1,0 +1,28 @@
+{
+  "name": "signalk-tank-monitor",
+  "version": "1.0.0",
+  "description": "Signal K tank monitor.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/preeve9534/signalk-tank-monitor.git"
+  },
+  "keywords": [
+    "signalk-webapp",
+    "tank",
+    "monitor"
+  ],
+  "author": "Paul Reeve <preeve@pdjr.eu>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/preeve9534/signalk-tank-monitor/issues"
+  },
+  "homepage": "https://github.com/preeve9534/signalk-tank-monitor#readme",
+  "dependencies": {},
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  }
+}
