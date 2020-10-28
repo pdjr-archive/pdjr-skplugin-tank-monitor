@@ -6,7 +6,7 @@
 
 	<script type="text/javascript" src="lib/page-utils/PageUtils.js"></script>
 	<script type="text/javascript" src="lib/signalk-libsignalkclient/SignalkClient.js"></script>
-	<script type="text/javascript" src="lib/SwitchMonitor.js"></script>
+	<script type="text/javascript" src="lib/TankMonitor.js"></script>
 
 	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 
@@ -26,9 +26,57 @@
         .hidden {
             display: none !important;
         }
-        .switchbank-container {
-            padding-top: 10px;
-            display: block;
+        .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tank-chart {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background-color: grey;
+        }
+        .tank-bar {
+            height: 700px;
+            width: 200px;
+            position: relative;
+        }
+        .tank-card {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 90%;
+            height: 100%;
+            margin-left: 5%;
+        }
+        .tank-card-region {
+            display: flex;
+            box-sizing: border-box;
+            width: 100%;
+            height: 10%;
+            border-top: solid yellow 1px;
+        }
+        .tank-capacity {
+            z-index: 40;
+        }
+        .tank-graph {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 90%;
+            margin-left: 5%;
+            height: 100%;
+            background-color: yellow;
+            color: green;
+            z-index: 20;
+            opacity: 0.7;
         }
         .switchbank-channel-cell {
             width: 100px;

@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/preeve9534/signalk-tank-monitor#readme",
   "dependencies": {},
-  "main": "index.html",
   "directories": {
     "lib": "lib"
   }
