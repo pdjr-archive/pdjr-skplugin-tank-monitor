@@ -17,14 +17,8 @@
             margin: 0;
             padding: 0;
         }
-        p, h1, h2, h3 {
-            margin-top: 0;
-        }
-        p {
-            color: red;
-        }
         .hidden {
-            display: none !important;
+            display: none;
         }
         .container {
             position: absolute;
@@ -33,18 +27,20 @@
             width: 100%;
             height: 100%;
         }
-
         .tank-chart {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: center;
-            height: 100%;
-            width: 100%;
+            position: absolute;
+            height: 96%;
+            width: 96%;
+            left: 2%;
+            top: 2%;
             background-color: grey;
         }
         .tank-bar {
-            height: 700px;
+            height: 100%;
             width: 200px;
             position: relative;
         }
@@ -58,13 +54,21 @@
         }
         .tank-card-region {
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             box-sizing: border-box;
             width: 100%;
             height: 10%;
-            border-top: solid yellow 1px;
+            border-top: solid black 1px;
         }
         .tank-capacity {
             z-index: 40;
+        }
+        .tankname,.tankvalues {
+          text-align: center;
+          font-size: 120%;
+          color: black;
+          z-index: 30;
         }
         .tank-graph {
             position: absolute;
@@ -73,97 +77,29 @@
             width: 90%;
             margin-left: 5%;
             height: 100%;
-            background-color: yellow;
+            background-color: cyan;
             color: green;
             z-index: 20;
             opacity: 0.7;
         }
-        .switchbank-channel-cell {
-            width: 100px;
-            height: 50px;
-            font-size: 75%;
-            font-weight: bold;
+        .tank-graph-percent {
+            postion: absolute;
+            top: -50;
             text-align: center;
-            vertical-align: middle;
-            opacity: 0.7;
-            border: 1px black solid;
-            background-color: orange;
-            color: black;
-            display: table-cell;
-            position: relative;
+            font-size: 150%;
         }
-        span.key {
-            display: block;
+        .tank-graph-volume {
             position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 75%;
-            padding: 1px;
-            pointer-events: none;
-        }
-        .switchbank-channel-cell .name {
-            ponter-events: none;
-        }
-        .switchbank-channel-cell.artifact {
-            display: none !important;
-        }
-        .switchbank-channel-cell.switch {
-            background-color: green !important;
-        }
-        .switchbank-table {
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-        .switchbank-table-header {
-            width: 90px;
-            min-width: 90px;
-            height: 60px;
-            background-color: #101010;
-            color: grey;
+            top: 50;
+            align: center;
+            content-align: center;
             text-align: center;
-            vertical-align: middle;
-            font-size: 80%;
-            font-weight: bold;
-        }
-        .switchbank-table-channel-container {
-            background-color: #101010;
-            vertical-align: middle;
-            padding: 5px;
-            padding-right: 20px;
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-        .switchbank-channel-cell.on {
-            opacity: 1;
-            color: black;
-        }
-        .switchbank-channel-cell.expired {
-            background-color: grey !important;
-        }
-        .table {
-            display: table;
-        }
-        .table-row {
-            display: table-row;
-        }
-        .table-cell {
-            display: table-cell;
-        }
-        .timeout {
-            //background-image: none !important;
-            animation: timeoutBG 5s ease-in !important;
-         }
-        @keyframes timeoutBG {
-            0% { background-color: currentColor; }
-            50% { background-color: currentColor; }
-            100% { background-color: grey; }
+            font-size: 150%;
         }
     </style>
 </head>
-<body onload="PageUtils.noRightClick(); TankMonitor.create({ server: '192.168.1.1', port: 3000, container: '#container' });">
+<body onload="PageUtils.noRightClick(); TankMonitor.create({ server: window.location.hostname, port: window.location.port, container: '#container' });">
     <div id='container'>
-        <script>
-        </script>
     </div>
 </body>
 </html>
