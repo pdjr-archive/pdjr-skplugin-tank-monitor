@@ -11,7 +11,7 @@ bar-chart showing the levels of all tanks reported in Signal K.
 The appearance of the display can be configured and extended to include
 alarm and other notifications.
 
-[Specimen screenshot](screenshot.png)
+![Specimen screenshot](screenshot.png)
 
 ## Installation
 
