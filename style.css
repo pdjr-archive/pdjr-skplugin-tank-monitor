@@ -7,13 +7,6 @@ html, body {
 .hidden {
   display: none;
 }
-.container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
 .tank-chart {
   display: flex;
   flex-direction: row;
@@ -48,14 +41,13 @@ html, body {
   height: 10%;
   border-top: solid black 1px;
 }
-.tank-capacity {
-  z-index: 40;
-}
-.tankname,.tankvalues {
+.legend {
   text-align: center;
   font-size: 120%;
+}
+.tankname, .tankdata {
   color: black;
-  z-index: 30;
+  z-index: 40;
 }
 .tank-graph {
   position: absolute;
@@ -82,4 +74,23 @@ html, body {
   content-align: center;
   text-align: center;
   font-size: 150%;
+}
+.icon {
+  width: 15px;
+  height: auto;
+}
+.alert {
+  animation: blink 1s;
+  animation-iteration-count: infinite;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -1,8 +1,9 @@
 const CONFIG = {
-  container: '#container',
-  server: window.location.hostname,
-  port: window.location.port,
-  ignorepaths: [  ],
-  factor: 1,
-  fluidnames: { "fuel": "Fuel", "wasteWater": "Waste", "freshWater": "Water" }
+  "tweaks": [
+    { "factor": 0.001, "places": 3 },
+    { "path": "tanks.fuel.8", "ignore": true },
+    { "path": "tanks.fuel", "name": "Fuel" },
+    { "path": "tanks.freshWater", "name": "Water" },
+    { "path": "tanks.wasteWater", "name": "Waste", "labels": [ { "label": "pump.svg", "trigger": "electrical.switches.bank.15.1" } ] }
+  ]
 }
