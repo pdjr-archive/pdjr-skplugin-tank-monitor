@@ -5,8 +5,11 @@ Display tank levels.
 This project implements a webapp for the
 [Signal K Node server](https://github.com/SignalK/signalk-server-node).
 
-__signalk-tank-monitor__ constructs a simple bar-chart showing the
-levels of all tanks reported in Signal K.
+__signalk-tank-monitor__ implements a web-page presenting a simple
+bar-chart showing the levels of all tanks reported in Signal K.
+
+The appearance of the display can be configured and extended to include
+alarm and other notifications.
 
 !(screenshot.png)
 
@@ -21,12 +24,17 @@ and installed using
 
 ## Using the plugin
 
-From the Signal K *Dashboard*, Navigate to *Webapps->Signalk-Tank-Monitor*.
+The plugin is enabled by default and you should be able to view all
+available tank data by pointing your browser to
+
+http://*my-server-address*:*my-server-port*/signalk-tank-monitor/
 
 ## Configuration
 
-__signalk-tank-monitor__'s dsipaly can be adjusted by configuring one
-or more *tweaks*.
+The behaviour of __signalk-tank-monitor__ and the appearance of the
+web page it generates can be adjusted using the plugin configuration
+page accessed  
+configuring one or more *tweaks*.
 Each tweak is characterised by the following properties, all of which
 are optional.
 
@@ -81,6 +89,29 @@ Example: display tank data with no decimal part.
 ```
 { "places": 0 }
 ```
+
+__labels__\
+Decorate this __path__ with some text or iconography, perhaps
+conditionally.
+Each entry in the __labels__ array defines a label which will be
+displayed at the top of the data region associated with __path__.
+There are two properies for each label definition.
+
+__label__\
+Specifies some text or the name of an SVG icon file which will form the
+displayed element.
+
+__trigger__\
+Is optional: if present, __label__ is only displayed when the trigger
+value is true; if absent, the the __label__ is displayed continuously.
+There are a number of possibilities for __trigger__:
+
+*path*\
+*path*[__<__*state*]\
+*path*[__>__*state*]\
+*notification_path*[__!__*state*]
+
+
 
 ## Debugging and logging
 

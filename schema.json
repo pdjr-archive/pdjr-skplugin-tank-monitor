@@ -1,34 +1,37 @@
 {
   "type": "object",
   "properties": {
-    "title": "Tweaks...",
-    "type": "array",
-    "items": {
-      "type": "object",
-      "properties": {
-        "path": { "type": "string", "title": "Tank path prefix to which this tweak applies" },
-        "name": { "type": "string", "title": "Fluid name to be used in lieu of Signal K default" },
-        "factor": { "type": "number", "title": "Multiplication factor to be applid to data values" },
-        "places": { "type": "number", "title": "Number of decimal places in data value display" },
-        "labels": {
-          "title": "Labels...",
-          "type": "array",
-          "default": [],
-          "items": {
-            "type": "object",
-            "properties": {
-              "label": { "type": "string", "title": "Label (text or SVG icon file name)" },
-              "trigger": { "type": "string", "title": "Trigger path (label will only be displayed when trigger is true)" }
+    "tweaks": {
+      "title": "Tweaks...",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string", "title": "Tank path prefix to which this tweak applies" },
+          "name": { "type": "string", "title": "Fluid name to be used in lieu of Signal K default" },
+          "color": { "type": "string", "title": "Color to be used for rendering this data path" },
+          "factor": { "type": "number", "title": "Multiplication factor to be applid to data values" },
+          "places": { "type": "number", "title": "Number of decimal places in data value display" },
+          "labels": {
+            "title": "Labels...",
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": { "type": "string", "title": "Label (text or SVG icon file name)" },
+                "trigger": { "type": "string", "title": "Trigger path (label will only be displayed when trigger is true)" }
+              }
             }
           }
         }
-      }
-    },
-    "default": [
-      { "path": "tanks.fuel", "name": "Fuel" },
-      { "path": "tanks.freshWater", "name": "Water" },
-      { "path": "tanks.wasteWater", "name": "Waste" }
-    ]
+      },
+      "default": [
+        { "path": "tanks.fuel", "name": "Fuel" },
+        { "path": "tanks.freshWater", "name": "Water" },
+        { "path": "tanks.wasteWater", "name": "Waste" }
+      ]
+    }
   }
 }
 

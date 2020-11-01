@@ -1,9 +1,14 @@
 const CONFIG = {
-  "tweaks": [
-    { "factor": 0.001, "places": 3 },
-    { "path": "tanks.fuel.8", "ignore": true },
-    { "path": "tanks.fuel", "name": "Fuel" },
-    { "path": "tanks.freshWater", "name": "Water" },
-    { "path": "tanks.wasteWater", "name": "Waste", "labels": [ { "label": "pump.svg", "trigger": "electrical.switches.bank.15.1" } ] }
+  "tweaks":[
+    { "ignore": "true" },
+    { "path": "tanks.wasteWater.0", "ignore": false },
+    { "path": "tanks.freshWater.1", "ignore": false },
+    { "path": "tanks.freshWater.2", "ignore": false },
+    { "path": "tanks.fuel.3", "ignore": false, "labels": [ { "label": "alert.svg" } ] },
+    { "path": "tanks.fuel.4", "ignore": false },
+
+    {"path":"tanks.fuel","name":"Fuel","color":"red"},
+    {"path":"tanks.freshWater","name":"Water"},
+    {"path":"tanks.wasteWater","name":"Waste"}
   ]
 }

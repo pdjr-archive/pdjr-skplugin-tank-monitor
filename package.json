@@ -15,6 +15,7 @@
     "tank",
     "monitor"
   ],
+  "signalk-plugin-enabled-by-default": true,
   "author": "Paul Reeve <preeve@pdjr.eu>",
   "license": "Apache-2.0",
   "bugs": {
