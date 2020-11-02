@@ -63,7 +63,7 @@ Example: convert all tank data from cubic metres to gallons:
 ```
 
 __places__\
-This integer property specifies the number of decimal places that should be used for diaplaying tank data from sources selected by __path__.
+This integer property specifies the number of decimal places that should be used for displaying tank data from sources selected by __path__.
 
 Example: display tank data with no decimal part.
 ```
@@ -71,14 +71,12 @@ Example: display tank data with no decimal part.
 ```
 
 __labels__\
-Decorate this __path__ with some text or iconography, perhaps
-conditionally. Each entry in the __labels__ array defines a *label* which will be
-displayed at the top of the data region associated with __path__.
-There are two properies for each label definition.
+This array property gathers together a cDecorate this __path__ with some text or iconography, perhaps conditionally. Each entry in the __labels__ array defines a *label* which will be displayed at the top of the data region associated with __path__.
+
+There are two properties for each label definition.
 
 __content__\
-Specifies some text or the name of an SVG icon file which will form
-the displayed element.
+Specifies some text or the name of an SVG icon file which will form the displayed element.
 
 __trigger__\
 Is optional: if present, __label__ is only displayed when the trigger
@@ -105,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTAyNDA2NDA3NCwtNTM5NDg2OTIyXX0=
+eyJoaXN0b3J5IjpbLTYyMDI1NDk4MiwtNTM5NDg2OTIyXX0=
 -->
