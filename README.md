@@ -73,12 +73,10 @@ Example: display tank data with no decimal part.
 __labels__\
 This array property gathers together a collection of label definitions. Each label definition supplies some text or iconography which will be used to decorate the data source selected by __path__ and defines whether or not the label should be displayed permanently or only when some trigger condition is met.
 
-Each entry in the __labels__ array defines a *label* which will be displayed at the top of the data region associated with __path__.
-
-There are two properties for each label definition.
+Each label definition may include the following properties.
 
 __content__\
-Specifies some text or the name of an SVG icon file which will form the displayed element.
+This striSpecifies some text or the name of an SVG icon file which will form the displayed element.
 
 __trigger__\
 Is optional: if present, __label__ is only displayed when the trigger
@@ -105,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MDA1MTE2NDYsLTUzOTQ4NjkyMl19
+eyJoaXN0b3J5IjpbNDc0NjUzNTM3LC01Mzk0ODY5MjJdfQ==
 -->
