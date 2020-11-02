@@ -81,7 +81,7 @@ This string property specifies some text or the name of an SVG icon file which w
 __trigger__\
 If present, then this string property supplies a trigger condition which must evaluate to true for label __content__  to be displayed.
 
-There are several possible forms
+A trigger condition is always formed from a Signal K path and some There are several possible styles of trigger condition.
 
 *path*\
 *path*[__<__*value*]\
@@ -103,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIyNzgzMjM5NiwtNTM5NDg2OTIyXX0=
+eyJoaXN0b3J5IjpbLTE4NDIyNTA0MTksLTUzOTQ4NjkyMl19
 -->
