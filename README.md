@@ -79,9 +79,9 @@ __content__\
 This string property specifies some text or the name of an SVG icon file which will form the displayed element.
 
 __trigger__\
-If present, then label __content__  will only be displayed when the trigger
-value is true; if absent, the the __label__ is displayed continuously.
-There are a number of possibilities for __trigger__:
+If present, then this string property supplies a trigger condition which must evaluate to true for label __content__  to be displayed.
+
+There are several possible forms
 
 *path*\
 *path*[__<__*value*]\
@@ -103,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyNDQ2Njk1OCwtNTM5NDg2OTIyXX0=
+eyJoaXN0b3J5IjpbLTIyNzgzMjM5NiwtNTM5NDg2OTIyXX0=
 -->
