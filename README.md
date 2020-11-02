@@ -7,9 +7,9 @@ __signalk-tank-monitor__ implements a webapp for the
 that presents a simple bar-chart showing the levels of all tanks
 reported in Signal K.
 
-A very lightweight configuration interface allows the user to modify
-the appearance of the display including by the addition of user-defined
-text and graphic alerts.
+The Signal K configuration interface can be used to modify the appearance
+of the generated display including by the addition of user-defined text
+and graphic alerts.
 
 ![Specimen screenshot](screenshot.png)
 
