@@ -19,7 +19,8 @@
             "items": {
               "type": "object",
               "properties": {
-                "label": { "type": "string", "title": "Label (text or SVG icon file name)" },
+                "label": { "type": "string", "title": "Label text" },
+                "icon": { "type": "string", "title": "Icon file name" },
                 "trigger": { "type": "string", "title": "Trigger path (label will only be displayed when trigger is true)" }
               }
             }

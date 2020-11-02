@@ -41,6 +41,10 @@ html, body {
   height: 10%;
   border-top: solid black 1px;
 }
+.tank-card-region.label {
+  flex-direction: row !important;
+  z-index: 30;
+}
 .legend {
   text-align: center;
   font-size: 120%;
@@ -76,8 +80,8 @@ html, body {
   font-size: 150%;
 }
 .icon {
-  width: 15px;
-  height: auto;
+  width: 24px;
+  height: 24px;
 }
 .alert {
   animation: blink 1s;
