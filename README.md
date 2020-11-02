@@ -20,20 +20,10 @@ The plugin is enabled by default and after installation you should be able to im
 
 The behaviour of __signalk-tank-monitor__ and the appearance of the generated web page can be adjusted using the configuration interface at *Server->Plugin Config->Tank monitor*.
 
-Configuration involves specifying one or more *tweaks*. Each tweak is characterised by the following properties, all of which
-are optional.
+Configuration involves specifying one or more *tweaks*. Each tweak is characterised by the following properties, all of which are optional.
 
 __path__\
-This string identifies the scope of application of the properties
-defined within the containing tweak and should consist of a tank path
-prefix.
-If no __path__ is specified, then the tweak will apply to all tank
-paths (equivalent to specifying the value "tanks."), otherwise the
-tweak will only apply to those tank paths that begin with the supplied
-value.
-Properties defined in a tweak with a specific __path__ value override
-any that may have been defined in tweaks with a more general __path__
-value.
+This string identifies the scope of application of the properties defined within the containing tweak and should consist of a tank path prefix. If no __path__ is specified, then the tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
 Example: restrict this tweak to just tanks containg waste:
 ```
 { "path": "tanks.wasteWater.", ..... }
@@ -120,5 +110,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTEwMzEyNjc0XX0=
+eyJoaXN0b3J5IjpbMTYxODUzNzEyXX0=
 -->
