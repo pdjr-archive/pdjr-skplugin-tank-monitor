@@ -83,8 +83,7 @@ If present, then this string property supplies a trigger condition which must ev
 
 A trigger condition is always formed from a Signal K path and some implied or explicit condition that path values will be tested against.  There are several possible styles of trigger condition.
 
-Style 1
-*path*\
+*path* - use the value returned by path as-is: so, if the path returns a non-zero value then _content 
 *path*[__<__*value*]\
 *path*[__>__*value*]\
 *notification_path*[__!__*state*]
@@ -104,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODc2MTU1Njg0LC01Mzk0ODY5MjJdfQ==
+eyJoaXN0b3J5IjpbMTA0MDE1NDY2MywtNTM5NDg2OTIyXX0=
 -->
