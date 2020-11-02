@@ -19,8 +19,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "label": { "type": "string", "title": "Label text" },
-                "icon": { "type": "string", "title": "Icon file name" },
+                "content": { "type": "string", "title": "Label text" },
                 "trigger": { "type": "string", "title": "Trigger path (label will only be displayed when trigger is true)" }
               }
             }
