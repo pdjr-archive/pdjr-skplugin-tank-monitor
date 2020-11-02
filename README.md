@@ -76,10 +76,10 @@ This array property gathers together a collection of label definitions. Each lab
 Each label definition may include the following properties.
 
 __content__\
-This striSpecifies some text or the name of an SVG icon file which will form the displayed element.
+This string property specifies some text or the name of an SVG icon file which will form the displayed element.
 
 __trigger__\
-Is optional: if present, __label__ is only displayed when the trigger
+If present, then label __content__  will only be displayed when the trigger
 value is true; if absent, the the __label__ is displayed continuously.
 There are a number of possibilities for __trigger__:
 
@@ -103,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNDc0NjUzNTM3LC01Mzk0ODY5MjJdfQ==
+eyJoaXN0b3J5IjpbMTUyNDQ2Njk1OCwtNTM5NDg2OTIyXX0=
 -->
