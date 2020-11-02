@@ -4,35 +4,23 @@ Display tank levels.
 
 __signalk-tank-monitor__ implements a webapp for the [Signal K Node server](https://github.com/SignalK/signalk-server-node) that presents a simple bar-chart showing the levels of all tanks reported in Signal K.
 
-The Signal K configuration interface can be used to modify the appearance
-of the generated display including by the addition of user-defined text
-and graphic alerts.
+The Signal K configuration interface can be used to modify the appearance of the generated display including by the addition of user-defined text and graphic alerts.
 
 ![Specimen screenshot](screenshot.png)
 
 ## Installation
 
-Download and install __signalk-tank-monitor__ using the *Appstore* menu
-option in your Signal K Node server console.
-The plugin can also be obtained from the 
-[project homepage](https://github.com/preeve9534/signalk-tank-monitor)
-and installed using
-[these instructions](https://github.com/SignalK/signalk-server-node/blob/master/SERVERPLUGINS.md).
+Download and install __signalk-tank-monitor__ using the *Appstore* menu option in your Signal K Node server console. The plugin can also be obtained from the [project homepage](https://github.com/preeve9534/signalk-tank-monitor) and installed using [these instructions](https://github.com/SignalK/signalk-server-node/blob/master/SERVERPLUGINS.md).
 
 ## Using the plugin
 
-The plugin is enabled by default and after installation you should be
-able to immediately view available tank data by selecting
-*Signalk-Tank-Monitor* in your host server's *Webapps* interface.
+The plugin is enabled by default and after installation you should be able to immediately view available tank data by selecting *Signalk-Tank-Monitor* in your host server's *Webapps* interface.
 
 ## Configuration
 
-The behaviour of __signalk-tank-monitor__ and the appearance of the
-generated web page can be adjusted using the configuration interface
-at *Server->Plugin Config->Tank monitor*.
+The behaviour of __signalk-tank-monitor__ and the appearance of the generated web page can be adjusted using the configuration interface at *Server->Plugin Config->Tank monitor*.
 
-Configuration involves specifying one or more *tweaks*.
-Each tweak is characterised by the following properties, all of which
+Configuration involves specifying one or more *tweaks*. Each tweak is characterised by the following properties, all of which
 are optional.
 
 __path__\
@@ -132,5 +120,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNTE2NzA2OTg2XX0=
+eyJoaXN0b3J5IjpbOTEwMzEyNjc0XX0=
 -->
