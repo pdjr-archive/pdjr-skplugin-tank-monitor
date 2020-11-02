@@ -87,8 +87,11 @@ A trigger condition is always formed from a Signal K path and some implied or ex
  
 *path*__<__*value* - only display __content__ if the value returned from *path* is less than *value*.
 
-*path*__>__*value* - only display __content__ if the value returned from *path* is greated t
-*notification_path*[__!__*state*]
+*path*__>__*value* - only display __content__ if the value returned from *path* is greater than *value*.
+
+*notification_path* - only display __content__  if there is an active  notification on *notification-path*.
+
+*notif__:__*state*]
 
 ## Debugging and logging
 
@@ -105,5 +108,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg3NDcxMjg1OCwtNTM5NDg2OTIyXX0=
+eyJoaXN0b3J5IjpbOTUwOTA3ODIzLC01Mzk0ODY5MjJdfQ==
 -->
