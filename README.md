@@ -2,10 +2,7 @@
 
 Display tank levels.
 
-__signalk-tank-monitor__ implements a webapp for the
-[Signal K Node server](https://github.com/SignalK/signalk-server-node)
-that presents a simple bar-chart showing the levels of all tanks
-reported in Signal K.
+__signalk-tank-monitor__ implements a webapp for the [Signal K Node server](https://github.com/SignalK/signalk-server-node) that presents a simple bar-chart showing the levels of all tanks reported in Signal K.
 
 The Signal K configuration interface can be used to modify the appearance
 of the generated display including by the addition of user-defined text
@@ -135,5 +132,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA2ODYyNzgwNF19
+eyJoaXN0b3J5IjpbNTE2NzA2OTg2XX0=
 -->
