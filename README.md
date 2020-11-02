@@ -24,42 +24,39 @@ Configuration involves specifying one or more *tweaks*. Each tweak is characteri
 
 __path__\
 This string identifies the scope of application of the properties defined within the containing tweak and should consist of a tank path prefix. If no __path__ is specified, then the tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
+
 Example: restrict this tweak to just tanks containg waste:
 ```
 { "path": "tanks.wasteWater.", ..... }
 ```
 
 __ignore__\
-This boolean property specifies whether or not tank data from sources
-selected by __path__ should be ignored or not.
+This boolean property specifies whether or not tank data from sources selected by __path__ should be ignored or not.
+
 Example: ignore data from fuel tank two:
 ```
 { "path": "tanks.fuel.2.", "ignore": true }
 ```
 
 __name__\
-This string property introduces a text string that will be used to
-label tank data from sources selected by __path__.
-If name is omitted then its value will default to the value of the
-token used by Signal K as the second element of a tank path.
-Example: change the display name for waste tanks from "wasteWater"
-to "Waste":
+This string property introduces a text string that will be used to label tank data from sources selected by __path__. If name is omitted then its value will default to the value of the token used by Signal K as the second element of a tank path.
+
+Example: change the display name for waste tanks from "wasteWater" to "Waste":
 ```
 { "path": "tanks.wasteWater.", "name": "Waste" }
 ```
  
 __color__\
-This string property introduces a text string that will be used to
-specify the colour used for the display of tank data from sources
-selected by __path__.
+This string property introduces a text string that will be used to specify the colour used for the display of tank data from sources selected by __path__.
+
 Example: display fuel data in red:
 ```
 { "path": "tanks.fuel.", "color": "red" }
 ```
 
 __factor__\
-This decimal property specifies a scaling factor that will be used to
-adjust tank data received from sources selected by __path__.
+This decimal property specifies a scaling factor that will be used to adjust tank data received from sources selected by __path__.
+
 Example: convert all tank data from cubic metres to gallons:
 ```
 { "factor": 264.172 }
@@ -110,5 +107,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTYxODUzNzEyXX0=
+eyJoaXN0b3J5IjpbLTUzOTQ4NjkyMl19
 -->
