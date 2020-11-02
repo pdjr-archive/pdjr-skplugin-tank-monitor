@@ -71,7 +71,7 @@ Example: display tank data with no decimal part.
 ```
 
 __labels__\
-This array property gathers together a cDecorate this __path__ with some text or iconography, perhaps conditionally. Each entry in the __labels__ array defines a *label* which will be displayed at the top of the data region associated with __path__.
+This array property gathers together a collection of label definitions. Each definition supplies some text or iconography which will be used to , perhaps conditionally. Each entry in the __labels__ array defines a *label* which will be displayed at the top of the data region associated with __path__.
 
 There are two properties for each label definition.
 
@@ -103,5 +103,5 @@ The plugin understands the following debug keys.
 Paul Reeve <preeve@pdjr.eu>\
 October 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTYyMDI1NDk4MiwtNTM5NDg2OTIyXX0=
+eyJoaXN0b3J5IjpbMTY3MDQ5MjUxMywtNTM5NDg2OTIyXX0=
 -->
