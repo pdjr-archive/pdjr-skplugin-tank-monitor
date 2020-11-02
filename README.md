@@ -91,22 +91,12 @@ A trigger condition is always formed from a Signal K path and some implied or ex
 
 *notification_path* - only display __content__  if there is an active  notification on *notification-path*.
 
-*notif__:__*state*]
-
-## Debugging and logging
-
-The plugin understands the following debug keys.
-
-| Key | Meaning                                                                                                   |
-|:-------------------|:-------------------------------------------------------------------------------------------|
-| switchbank:\*      | Enable all keys.                                                                           | 
-| switchbank:actions | Log each output action taken by the plugin.                                                |
-| switchbank:rules   | Log each rule loaded by the plugin and indicate whether it was successfully parsed or not. |
+*notification-path*__:__*state* - only display __content__  if there is an active  notification on *notification-path* and its state property is equal to *state*.
 
 ## Author
 
 Paul Reeve <preeve@pdjr.eu>\
-October 2020
+November 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTUwOTA3ODIzLC01Mzk0ODY5MjJdfQ==
+eyJoaXN0b3J5IjpbLTMxODMwODgzLC01Mzk0ODY5MjJdfQ==
 -->
