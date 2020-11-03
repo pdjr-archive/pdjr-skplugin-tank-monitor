@@ -41,7 +41,7 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
-    fs.writeFileSync(APP_CONFIG_FILE, 'const CONFIG = ' + JSON.stringify(options));
+    fs.writeFileSync(APP_CONFIG_FILE, 'const CONFIG = ' + JSON.stringify(options,0,2));
   }
 
   plugin.stop = function() {
