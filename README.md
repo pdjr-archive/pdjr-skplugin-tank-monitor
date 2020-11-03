@@ -93,6 +93,11 @@ A trigger condition is always formed from a Signal K path and some implied or ex
 
 *notification-path*__:__*state* - only display __content__  if there is an active  notification on *notification-path* and its state property is equal to *state*.
 
+Example: display an alert icon when the fresh-water level in tank two is below 10%.
+```
+{ "path": "tanks.freshWater.2", "labels": [ { "content": "icons/alert.svg", "trigger": "tanks.freshWater.2.currentState<0.1" } ] }
+```
+
 ## Example configuration
 
 My configuration file is listed below. For the purpose of exposition, the JSON has been re-formatted to show one-tweak-per line (the order of tweaks is irrelevant).
