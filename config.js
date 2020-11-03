@@ -8,30 +8,18 @@ const CONFIG = {
       "ignore": false,
       "labels": [
         {
-          "content": "icons/pump.svg",
-          "trigger": "electrical.switches.15.1.state"
+          "content": "DISCHARGING",
+          "trigger": "electrical.switches.bank.10.1.state"
         }
       ]
     },
     {
       "path": "tanks.freshWater.1",
-      "ignore": false,
-      "labels": [
-        {
-          "content": "LOW LEVEL",
-          "trigger": "tanks.freshWater.1.currentLevel<0.12"
-        }
-      ]
+      "ignore": false
     },
     {
       "path": "tanks.freshWater.2",
-      "ignore": false,
-      "labels": [
-        {
-          "content": "LOW LEVEL",
-          "trigger": "tanks.freshWater.2.currentLevel<0.12"
-        }
-      ]
+      "ignore": false
     },
     {
       "path": "tanks.fuel.3",
