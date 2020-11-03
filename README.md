@@ -93,6 +93,40 @@ A trigger condition is always formed from a Signal K path and some implied or ex
 
 *notification-path*__:__*state* - only display __content__  if there is an active  notification on *notification-path* and its state property is equal to *state*.
 
+## Example configuration
+
+My configuration file is listed below. For the purpose of exposition, the JSON has been re-formatted to show one-tweak-per line (the order of tweaks is irrelevant).
+
+1. Use the "name" property to apply nice fluid names (lines 013-017). These are the default tweaks that ship with the plugin.
+
+2. Use the "color" property to display fuel data in red (line 013).
+
+3. Use the "ignore" property to deal with a buggy Maretron multi-channel tank-level sensor module. This device sporadically transmits junk data for unused tank sensor inputs and I get around this issue by explicitly stopping the plugin from from processing data for all tanks (line 007) and then selectively enabling processing of data for each of my five real inputs (lines 008-012).
+
+4. Use the "labels" property to add a visual alert when the waste discharge pump is running (line 008). 
+
+```
+001:     {
+002:       "enabled": true,
+003:       "enableLogging": false,
+004:       "enableDebug": false,
+005:       "configuration": {
+006:         "tweaks": [
+007:           { "ignore": true },
+008:           { "path": "tanks.wasteWater.0", "ignore": false, "labels": [ { "content": "DISCHARGING", "trigger": "electrical.switches.15.1.state" } ] },
+009:           { "path": "tanks.freshWater.1", "ignore": false },
+010:           { "path": "tanks.freshWater.2", "ignore": false },
+011:           { "path": "tanks.fuel.3", "ignore": false },
+012:           { "path": "tanks.fuel.4", "ignore": false },
+013:           { "path": "tanks.fuel", "name": "Fuel", "color": "red" },
+014:           { "path": "tanks.freshWater", "name": "Water" },
+015:           { "path": "tanks.wasteWater", "name": "Waste" }
+016:         ]
+017:       }
+018:     }
+```
+
+
 ## Author
 
 Paul Reeve <preeve@pdjr.eu>\
