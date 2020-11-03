@@ -35,7 +35,7 @@ This boolean property specifies whether or not tank data from sources selected b
 
 Example: ignore data from fuel tank two:
 ```
-{ "path": "tanks.fuel.2.", "ignore": true }
+{ "path": "tanks.fuel.2", "ignore": true }
 ```
 
 __name__\
