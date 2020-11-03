@@ -9,13 +9,19 @@ const CONFIG = {
       "labels": [
         {
           "content": "DISCHARGING",
-          "trigger": "electrical.switches.bank.10.1.state"
+          "trigger": "electrical.switches.15.1.state"
         }
       ]
     },
     {
       "path": "tanks.freshWater.1",
-      "ignore": false
+      "ignore": false,
+      "labels": [
+        {
+          "content": "FILLING",
+          "trigger": "tanks.freshWater.1.currentLevel+0.001"
+        }
+      ]
     },
     {
       "path": "tanks.freshWater.2",

@@ -89,6 +89,10 @@ A trigger condition is always formed from a Signal K path and some implied or ex
 
 *path*__>__*value* - only display __content__ if the value returned from *path* is greater than *value*.
 
+*path*__+__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is greater than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 50 readings).
+
+*path*__-__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is greater than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 50 readings).
+
 *notification_path* - only display __content__  if there is an active  notification on *notification-path*.
 
 *notification-path*__:__*state* - only display __content__  if there is an active  notification on *notification-path* and its state property is equal to *state*.
@@ -119,7 +123,7 @@ My configuration file is listed below. For the purpose of exposition, the JSON h
 006:         "tweaks": [
 007:           { "ignore": true },
 008:           { "path": "tanks.wasteWater.0", "ignore": false, "labels": [ { "content": "DISCHARGING", "trigger": "electrical.switches.15.1.state" } ] },
-009:           { "path": "tanks.freshWater.1", "ignore": false },
+009:           { "path": "tanks.freshWater.1", "ignore": false, "labels": [ { "content": "FILLING", "trigger": "tanks.freshWater.1.currentLevel+0.01" } ] },
 010:           { "path": "tanks.freshWater.2", "ignore": false },
 011:           { "path": "tanks.fuel.3", "ignore": false },
 012:           { "path": "tanks.fuel.4", "ignore": false },
@@ -136,6 +140,3 @@ My configuration file is listed below. For the purpose of exposition, the JSON h
 
 Paul Reeve <preeve@pdjr.eu>\
 November 2020
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTMxODMwODgzLC01Mzk0ODY5MjJdfQ==
--->
