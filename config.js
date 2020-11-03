@@ -20,6 +20,10 @@ const CONFIG = {
         {
           "content": "FILLING",
           "trigger": "tanks.freshWater.1.currentLevel+0.001"
+        },
+        {
+          "content": "EMPTYING",
+          "trigger": "tanks.freshWater.1.currentLevel-0.001"
         }
       ]
     },
