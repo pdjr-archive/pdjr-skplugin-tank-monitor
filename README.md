@@ -89,9 +89,9 @@ A trigger condition is always formed from a Signal K path and some implied or ex
 
 *path*__>__*value* - only display __content__ if the value returned from *path* is greater than *value*.
 
-*path*__+__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is greater than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 50 readings).
+*path*__+__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is greater than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 30 readings).
 
-*path*__-__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is greater than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 50 readings).
+*path*__-__*value*[__,__*sample-size*] - only display __content__ if the value returned from *path* is less than a computed average of previous values by *value*. If specified, *sample-size* gives the number of accumulated values used to derive the average (defaults to 30 readings).
 
 *notification_path* - only display __content__  if there is an active  notification on *notification-path*.
 
