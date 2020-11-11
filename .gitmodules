@@ -7,3 +7,12 @@
 [submodule "lib/signalk-libschema"]
 	path = lib/signalk-libschema
 	url = http://github.com/preeve9534/signalk-libschema
+[submodule "lib/signalk-liblog"]
+	path = lib/signalk-liblog
+	url = http://github.com/preeve9534/signalk-liblog
+[submodule "lib/librrdclient"]
+	path = lib/librrdclient
+	url = http://github.com/preeve9534/librrdclient
+[submodule "lib/libkellycolors"]
+	path = lib/libkellycolors
+	url = http://github.com/preeve9534/libkellycolors

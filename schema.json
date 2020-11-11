@@ -1,36 +1,109 @@
 {
   "type": "object",
   "properties": {
+    "rrdenabled": { "type": "boolean", "title": "Enable time-series logging?", "default": false },
+    "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },
+    "rrdfolder": { "type": "string", "title": "Folder where RRD files are stored" },
     "tweaks": {
       "title": "Tweaks...",
       "type": "array",
       "items": {
         "type": "object",
         "properties": {
-          "path": { "type": "string", "title": "Tank path prefix to which this tweak applies" },
-          "name": { "type": "string", "title": "Fluid name to be used in lieu of Signal K default" },
-          "color": { "type": "string", "title": "Color to be used for rendering this data path" },
-          "factor": { "type": "number", "title": "Multiplication factor to be applid to data values" },
-          "places": { "type": "number", "title": "Number of decimal places in data value display" },
+          "path": { "type": "string", "title": "Apply this tweak to tank paths that begin with", "pattern": "^tanks\..*" },
+          "ignore": { "type": "boolean", "title": "Ignore this data completely?", "default": false },
+          "log": { "type": "boolean", "title": "Log time-series data", "default": false },
+          "name": { "type": "string", "title": "Use this fluid name instead of the Signal K default" },
+          "color": { "type": "string", "title": "Use this color for rendering data" },
+          "factor": { "type": "number", "title": "Multiply all data values by this factor", "exclusiveMinimum": 0 },
+          "places": { "type": "number", "title": "Restrict data value to this many decimal places", "minimum": 0 },
           "labels": {
-            "title": "Labels...",
             "type": "array",
             "default": [],
             "items": {
               "type": "object",
+              "title": "Apply this label",
               "properties": {
-                "content": { "type": "string", "title": "Label text" },
-                "trigger": { "type": "string", "title": "Trigger path (label will only be displayed when trigger is true)" }
+                "content": { "type": "string", "title": "Use this text (or this icon)" },
+                "trigger": { "type": "string", "title": "Trigger label display only when this condition is true" }
               }
             }
           }
         }
       },
       "default": [
+        { "color": "#00FFFF" },
         { "path": "tanks.fuel", "name": "Fuel" },
         { "path": "tanks.freshWater", "name": "Water" },
         { "path": "tanks.wasteWater", "name": "Waste" }
       ]
+    },
+    "rrdtool" : {
+      "type": "object",
+      "properties": {
+        "create": {
+          "type": "object",
+          "properties": {
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            },
+            "rradefs": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "graph": {
+          "type": "object",
+          "properties": {
+            "folder": { "type": "string" },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "value": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "default": {
+        "create": {
+          "options": [ { "name": "-s", "value": "60" } ],
+          "rradefs": [ "RRA:AVERAGE:0.5:5m:1d", "RRA:AVERAGE:0.5:10m:1w", "RRA:AVERAGE:0.5:30m:1M", "RRA:AVERAGE:0.5:1h:1y" ]
+        },
+        "graph": {
+          "folder": "graph/",
+          "options": [
+            { "name": "--start", "value": "{START}" },
+            { "name": "--title", "value": "'Tank levels over previous {PERIOD}'" },
+            { "name": "--vertical-label", "value": "'Percent capacity'" },
+            { "name": "--width", "value": "800" },
+            { "name": "--height", "value": "300" },
+            { "name": "--full-size-mode", "value": "" },
+            { "name": "--upper-limit", "value": "100" },
+            { "name": "--lower-limit", "value": "0" },
+            { "name": "--rigid", "value": "" },
+            { "name": "--color", "value": "CANVAS#000000" },
+            { "name": "--color", "value": "BACK#000000" },
+            { "name": "--color", "value": "FONT#808080" },
+            { "name": "--font", "value": "'LEGEND:8:Courier New'" },
+            { "name": "--imgformat", "value": "SVG" },
+            { "name": "--tabwidth", "value": "80" },
+            { "name": "--watermark", "value": "'Generated on {DATE}'" },
+            { "name": "--slope-mode", "value": "" }
+          ]
+      }
     }
   }
 }

@@ -111,3 +111,38 @@ html, body {
     opacity: 1;
   }
 }
+#popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  min-height: 100vh;
+  z-index: 100;
+}
+#popup .image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: auto;
+}
+
+#popup .nav {
+  height: 100%;
+  z-index: 110;
+}
+#popup .left {
+  position: absolute;
+  left: 0;
+  width: 20%;
+}
+#popup .right {
+  position: absolute;
+  right: 0;
+  width: 20%;
+}
+

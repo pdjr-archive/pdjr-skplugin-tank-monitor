@@ -2,11 +2,19 @@
 
 Display tank levels.
 
-__signalk-tank-monitor__ implements a webapp for the [Signal K Node server](https://github.com/SignalK/signalk-server-node) that presents a simple bar-chart showing the levels of all tanks reported in Signal K.
+__signalk-tank-monitor__ implements a webapp and plugin for the [Signal K Node server](https://github.com/SignalK/signalk-server-node).
 
-The Signal K configuration interface can be used to modify the appearance of the generated display including by the addition of user-defined text and graphic alerts.
+The webapp presents a simple bar-chart showing the levels of all tanks reported in Signal K. Signal K's plugin configuration interface can be used to customise the webapp display including by the addition of user-defined text and graphic alerts.
 
-![Specimen screenshot](screenshot.png)
+The plugin optionally supports background logging of time-series tank data using [RRD Tool](https://oss.oetiker.ch/rrdtool/) and if this feature is enabled then the webapp is enhanced to include the display of historic tank level data over various time frames.
+
+$![Specimen screenshot](screenshot.png)
+
+## System requirements
+
+__signalk-tank-monitor__ has no special installation requirements.
+
+If you wish to log time-series tank data then [RRDTool](https://oss.oetiker.ch/rrdtool/) must either be installed on the local host or a available as a network service.
 
 ## Installation
 
@@ -14,13 +22,44 @@ Download and install __signalk-tank-monitor__ using the *Appstore* menu option i
 
 ## Using the plugin
 
-The plugin is enabled by default and after installation you should be able to immediately view available tank data by selecting *Signalk-Tank-Monitor* in your host server's *Webapps* interface.
+The plugin is enabled by default and after installation you should be able to immediately view all tank data available in Signal K by selecting *Signalk-Tank-Monitor* in your host server's *Webapps* interface.
 
 ## Configuration
 
 The behaviour of __signalk-tank-monitor__ and the appearance of the generated web page can be adjusted using the configuration interface at *Server->Plugin Config->Tank monitor*.
 
-Configuration involves specifying one or more *tweaks*. Each tweak is characterised by the following properties, all of which are optional.
+Configuration involves specifying one or more *tweaks* which collectively allow you to select the tank data streams processed by the plugin; if and how values from each data stream should be transformed; how data should be presented and whether or not stream data should be saved to a time-series database.
+
+Tweaks are either global in scope (that is they apply to every tank data stream) or specialised so that they apply only to restricted number (perhaps just a single) data stream.  Specialisation is achieved by including a __path__ property within a tweak which defines the restriction that should be imposed on all other tweak properties. More specialised tweak's exert more influence than their less specialised siblings. For example:
+```
+[
+  { "color": "#FFFFFF" }, // Display data from all tanks in white
+  { "path": "tanks.fuel", "color": "#FF0000" } // But make sure to display fuel tank data in red
+]
+```
+
+If you intend using the plugin to log historical tank data, then you should first of all use one or more tweaks to ensure that the webapp is displaying the data you expect to be logged. It is recommended that any data streams which are defined explicitly - i.e. you should provide a tweak containing the complete tank data stream path for each.
+
+The following properties can be used within a tweak.
+
+__path__\
+By default, all tank data available to Signal K will be used by the plugin, but you can filter the . If you want to restrict the data streams processed by tconfigure some *tweak*s (see below) to filter out unwanted data streams. 
+
+If you intend keeping a log of tank data, then you should explicitly define a tweak for each tank path that you want to record. This is necessary to ensure that data used for logging is structured consistently in what can be a rather volatile operating context.
+ 
+## Tweaks
+
+You configure __signalk-tank-monitor__ by specifying one or more *tweaks*. Collectively, tweaks allow you to select which tank data streams should be processed by the plugin, if and how values from those data streams should be transformed, how data should be presented and whether or not stream data should be saved to a time-series  database.
+
+Tweaks are either global in scope (that is they apply to every tank data stream) or specialised so that they apply only to restricted number (perhaps just a single) data stream.  Specialisation is achieved by including a __path__ property within a tweak which defines the restriction that should be imposed on all other tweak propertiesi: more specialised tweak's exert more influence than their less specialised siblings. For example:
+```
+[
+  { "color": "#FFFFFF" }, // Display data from all tanks in white
+  { "path": "tanks.fuel", "color": "#FF0000" } // But make sure to display fuel tank data in red
+]
+```
+
+The following properties can be used within a tweak.
 
 __path__\
 This string identifies the scope of application of the properties defined within the containing tweak and should consist of a tank path prefix. If no __path__ is specified, then the tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
@@ -36,6 +75,17 @@ This boolean property specifies whether or not tank data from sources selected b
 Example: ignore data from fuel tank two:
 ```
 { "path": "tanks.fuel.2", "ignore": true }
+```
+
+__log__\
+This boolean property specifies whether or not tank data from sources selected by __path__ should be logged. Because the paths available to Signal K are not necessarily always present this property should only be applied when the associated __path__ is fully qualified.
+
+__rrd__\
+This boolean property specifies whether or not tank data from sources selected by __path__ should be logged or not. If sources are logged then historical data can be accessed through the webapp interface.
+
+Example: log time series date for all tanks:
+```
+{ "rrd": true }
 ```
 
 __name__\
@@ -102,6 +152,31 @@ Example: display an alert icon when the fresh-water level in tank two is below 1
 { "path": "tanks.freshWater.2", "labels": [ { "content": "icons/alert.svg", "trigger": "tanks.freshWater.2.currentState<0.1" } ] }
 ```
 
+## Data logging configuration
+
+Data logging is disabled by default. If you want to use this feature, then take note of the installation requirements discussed above. The following configuration properties apply.
+
+__Enable time series logging?__ (rrdenabled)\
+If checked, then the plugin will attempt to log data to an RRD database called 'tankmonitor.rrd'.
+
+If, as is most likely, you are not using a data cacheing service provided by rrdcached(1) then this file will be created in the folder specified by the following property.
+
+If you are using a data cacheing service, then this file will be created in the root of the working directory which you specified when you started the service. In this case, you must specify this directory location in the following property so that RRD tool's graphing application can find the database. In the very unlikely event that you are using a remote cacheing service, then you will need to make your own arrangements for generating and displaying graphical representations of logged data.
+
+__Folder containing 'tankmonitor.rrd'__ (rrdfolder)\
+This value defaults to the value 'rrd/', which specifies the ```rrd/``` folder in the plugin's installation directory. If you are not using an rrdcached(1) service, then there is no need to change this.
+
+If you are using an rrdcached(1) service on the local host, then the plugin needs to know where the cacheing daemon has placed ```tankmonitor.rrd``` and you should specify that folder here.
+
+__Connect to the RRD daemon at__ (rrdcstring)\
+If you have an rrdcached(1) service available and you want to use it, then you have two options:
+
+1. Your daemon listens on a Unix pipe. In this case, specify a string of the form "*path*" where *path* is the name of the FIFO file on the local host that is monitored by the RRD daemon.
+
+2. Your daemon listens on a TCP/IP port. In this case, specify a string of the form "*hostname*__:__*port*" where *hostname* is the IP address or hostname of the daemon's server and *port* is the port number on which the daemon listens.
+
+If you are not running rrdcached(1), then leave this property value undefined and the plugin will use rrdtool(1) for all database manipulation.
+
 ## Example configuration
 
 My configuration file is listed below. For the purpose of exposition, the JSON has been re-formatted to show one-tweak-per line (the order of tweaks is irrelevant).
@@ -114,19 +189,26 @@ My configuration file is listed below. For the purpose of exposition, the JSON h
 
 4. Use the "labels" property to add a visual alert when the waste discharge pump is running (line 008). 
 
+5. Log tank readings to a time-series database (line 006) located in the specified folder (line 009).
+
+6. Connect to a cacheing daemon litsening on the specified Unix domain socket (line 010).
+
 ```
 001:     {
 002:       "enabled": true,
 003:       "enableLogging": false,
 004:       "enableDebug": false,
 005:       "configuration": {
+             "rrdenabled": true,
+             "rrdfolder": "/var/rrd/",
+             "rrdcstring": "/var/rrd/rrdcached.sock",
 006:         "tweaks": [
 007:           { "ignore": true },
-008:           { "path": "tanks.wasteWater.0", "ignore": false, "labels": [ { "content": "DISCHARGING", "trigger": "electrical.switches.15.1.state" } ] },
-009:           { "path": "tanks.freshWater.1", "ignore": false, "labels": [ { "content": "FILLING", "trigger": "tanks.freshWater.1.currentLevel+0.01" } ] },
-010:           { "path": "tanks.freshWater.2", "ignore": false },
-011:           { "path": "tanks.fuel.3", "ignore": false },
-012:           { "path": "tanks.fuel.4", "ignore": false },
+008:           { "path": "tanks.wasteWater.0", "ignore": false, "log": true, "labels": [ { "content": "DISCHARGING", "trigger": "electrical.switches.15.1.state" } ] },
+009:           { "path": "tanks.freshWater.1", "ignore": false, "log": true, "labels": [ { "content": "FILLING", "trigger": "tanks.freshWater.1.currentLevel+0.01" } ] },
+010:           { "path": "tanks.freshWater.2", "ignore": false, "log": true },
+011:           { "path": "tanks.fuel.3", "ignore": false, "log": true },
+012:           { "path": "tanks.fuel.4", "ignore": false, "log": true },
 013:           { "path": "tanks.fuel", "name": "Fuel", "color": "red" },
 014:           { "path": "tanks.freshWater", "name": "Water" },
 015:           { "path": "tanks.wasteWater", "name": "Waste" }

@@ -22,7 +22,11 @@
     "url": "https://github.com/preeve9534/signalk-tank-monitor/issues"
   },
   "homepage": "https://github.com/preeve9534/signalk-tank-monitor#readme",
-  "dependencies": {},
+  "dependencies": {
+    "baconjs": "^1.0.1",
+    "node-rrdtool": "^0.1.3",
+    "sprintf-js": "^1.1.2"
+  },
   "directories": {
     "lib": "lib"
   },
