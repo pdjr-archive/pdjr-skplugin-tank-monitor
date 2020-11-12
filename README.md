@@ -43,7 +43,7 @@ If you intend using the plugin to log historical tank data, then you should firs
 The following properties can be used within a tweak.
 
 __Apply this tweak to tank paths that begin with__ [path]\
-This string property identifies the scope of application of the containing tweak and should consist of a tank path prefix. If no __path__ is specified, then the tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
+This string property identifies the scope of application of the containing tweak and should consist of a tank path prefix. If the property value is undefined, then the containing tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
 
 Example: restrict this tweak to just data describing tanks containg waste water:
 ```
@@ -204,5 +204,5 @@ My configuration file is listed below. For the purpose of exposition, the JSON h
 Paul Reeve <preeve@pdjr.eu>\
 November 2020
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTczMTA2MTkzMV19
+eyJoaXN0b3J5IjpbLTIxMjUyMDI0MjZdfQ==
 -->
