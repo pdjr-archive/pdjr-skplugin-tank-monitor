@@ -1,9 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "rrdenabled": { "type": "boolean", "title": "Enable time-series logging?", "default": false },
-    "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },
-    "rrdfolder": { "type": "string", "title": "Folder where RRD files are stored" },
     "tweaks": {
       "title": "Tweaks...",
       "type": "array",
@@ -12,7 +9,7 @@
         "properties": {
           "path": { "type": "string", "title": "Apply this tweak to tank paths that begin with", "pattern": "^tanks\..*" },
           "ignore": { "type": "boolean", "title": "Ignore this data completely?", "default": false },
-          "log": { "type": "boolean", "title": "Log time-series data", "default": false },
+          "log": { "type": "boolean", "title": "Log time-series data?", "default": false },
           "name": { "type": "string", "title": "Use this fluid name instead of the Signal K default" },
           "color": { "type": "string", "title": "Use this color for rendering data" },
           "factor": { "type": "number", "title": "Multiply all data values by this factor", "exclusiveMinimum": 0 },
@@ -38,6 +35,9 @@
         { "path": "tanks.wasteWater", "name": "Waste" }
       ]
     },
+    "rrdenabled": { "type": "boolean", "title": "Enable time-series logging?", "default": false },
+    "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },
+    "rrdfolder": { "type": "string", "title": "Folder where RRD files are stored" },
     "rrdtool" : {
       "type": "object",
       "properties": {

@@ -57,25 +57,25 @@ module.exports = function(app) {
   plugin.start = function(options) {
     fs.writeFileSync(APP_CONFIGURATION_FILE, "CONFIG=" + JSON.stringify(options));
     if (options.rrdenabled) {
-      log.N("configuration enables time-series logging");
+      log.N("time-series logging enabled");
       var tankPaths = options.tweaks.filter(t => ((!t.ignore) && (t.log))).map(t => (t.path + ".currentLevel"));
       if (tankPaths.length > 0) {
-        log.N("configuration requests logging of %d data channels", tankPaths.length);
+        log.N("logging %d data channels", tankPaths.length);
         var rrdclient = new RrdClient((debug.enabled('rrd'))?{ debug: true }:{});
         var dbname = plugin.id + ".rrd";
         var nowSeconds = Math.floor(Date.now() / 1000);
         rrdclient.connect(options.rrdcstring, (d) => { debug.N("rrd", "%s", d); }).then(
           (socket) => {
-            if (socket) log.N("connected to RRD cache daemon on %s", cstring);
-            var heartbeat = (options.rrdtool.create.options.reduce((a,v) => ((v.name == "-s")?v.value:a), 0) * 2);
+            if (socket) log.N("connected to RRD cache daemon on %s", options.rrdcstring);
+            var step = options.rrdtool.create.options.reduce((a,v) => ((v.name == "-s")?v.value:a), null) || 60;
+            var heartbeat = (step * 2);
             var dsdefs = tankPaths.map(p => { return("DS:" + dsName(p, options.tweaks) + ":GAUGE:" + heartbeat + ":0:100"); });
             rrdclient.create(dbname, options.rrdtool.create.options, dsdefs, options.rrdtool.create.rradefs).then(
               () => {
                 var stream = bacon.zipAsArray(tankPaths.map(p => app.streambundle.getSelfStream(p))).debounceImmediate(RRD_UPDATE_INTERVAL);
                 var step = 0;
                 unsubscribes.push(stream.onValue(v => {
-                  nowSeconds = Math.floor(Date.now() / 1000);
-                  rrdclient.update(dbname, nowSeconds, v.map(x => Math.floor((x * 100) + 0.5))).then(
+                  rrdclient.update(dbname, v.map(x => Math.floor((x * 100) + 0.5))).then(
                     () => { }, // Success
                     () => { }  // Failure
                   );
@@ -99,7 +99,11 @@ module.exports = function(app) {
           },
           () => { log.N("cannot connect to RRD cache daemon on %s", cstring); }
         );
+      } else {
+        log.W("time-series logging is enabled, but no log streams are configured");
       }
+    } else {
+      log.N("time-series logging disabled by configuration setting");
     }
   }
 

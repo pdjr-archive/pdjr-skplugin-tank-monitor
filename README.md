@@ -28,48 +28,29 @@ The plugin is enabled by default and after installation you should be able to im
 
 The behaviour of __signalk-tank-monitor__ and the appearance of the generated web page can be adjusted using the configuration interface at *Server->Plugin Config->Tank monitor*.
 
-Configuration involves specifying one or more *tweaks* which collectively allow you to select the tank data streams processed by the plugin; if and how values from each data stream should be transformed; how data should be presented and whether or not stream data should be saved to a time-series database.
-
-Tweaks are either global in scope (that is they apply to every tank data stream) or specialised so that they apply only to restricted number (perhaps just a single) data stream.  Specialisation is achieved by including a __path__ property within a tweak which defines the restriction that should be imposed on all other tweak properties. More specialised tweak's exert more influence than their less specialised siblings. For example:
+Configuration involves specifying one or more *tweaks* each of which contains one or more configuration properties. A tweak is either global in scope (that is it applies to every tank data stream) or specialised so that it applies to only a restricted number (perhaps just a single) data stream.  Specialisation is achieved by including a __path__ property within a tweak which defines the restriction that should be imposed on all other tweak properties. More specialised tweak's exert more influence than their less specialised siblings. For example, the following pair of tweaks sets the display color of all tank data channels to white and then overrides this to set the display color of fuel channels to red:
 ```
 [
   { "color": "#FFFFFF" }, // Display data from all tanks in white
-  { "path": "tanks.fuel", "color": "#FF0000" } // But make sure to display fuel tank data in red
+  { "path": "tanks.fuel.", "color": "#FF0000" } // But make sure to display fuel tank data in red
 ]
 ```
 
-If you intend using the plugin to log historical tank data, then you should first of all use one or more tweaks to ensure that the webapp is displaying the data you expect to be logged. It is recommended that any data streams which are defined explicitly - i.e. you should provide a tweak containing the complete tank data stream path for each.
+If you intend using the plugin to log historical tank data, then you should first of all use one or more tweaks to ensure that the webapp is displaying the data you want to be logged before you enable logging.
 
-The following properties can be used within a tweak.
-
-__path__\
-By default, all tank data available to Signal K will be used by the plugin, but you can filter the . If you want to restrict the data streams processed by tconfigure some *tweak*s (see below) to filter out unwanted data streams. 
-
-If you intend keeping a log of tank data, then you should explicitly define a tweak for each tank path that you want to record. This is necessary to ensure that data used for logging is structured consistently in what can be a rather volatile operating context.
- 
 ## Tweaks
 
-You configure __signalk-tank-monitor__ by specifying one or more *tweaks*. Collectively, tweaks allow you to select which tank data streams should be processed by the plugin, if and how values from those data streams should be transformed, how data should be presented and whether or not stream data should be saved to a time-series  database.
-
-Tweaks are either global in scope (that is they apply to every tank data stream) or specialised so that they apply only to restricted number (perhaps just a single) data stream.  Specialisation is achieved by including a __path__ property within a tweak which defines the restriction that should be imposed on all other tweak propertiesi: more specialised tweak's exert more influence than their less specialised siblings. For example:
-```
-[
-  { "color": "#FFFFFF" }, // Display data from all tanks in white
-  { "path": "tanks.fuel", "color": "#FF0000" } // But make sure to display fuel tank data in red
-]
-```
-
 The following properties can be used within a tweak.
 
-__path__\
+__Apply this tweak to tank paths that begin with__ [path]\
 This string identifies the scope of application of the properties defined within the containing tweak and should consist of a tank path prefix. If no __path__ is specified, then the tweak will apply to all tank paths (equivalent to specifying the value "tanks."), otherwise the tweak will only apply to those tank paths that begin with the supplied value. Properties defined in a tweak with a specific __path__ value override any that may have been defined in tweaks with a more general __path__ value.
 
-Example: restrict this tweak to just tanks containg waste:
+Example: restrict this tweak to just data describing tanks containg waste water:
 ```
 { "path": "tanks.wasteWater.", ..... }
 ```
 
-__ignore__\
+__Ignore this data completely?__ [ignore]\
 This boolean property specifies whether or not tank data from sources selected by __path__ should be ignored or not.
 
 Example: ignore data from fuel tank two:
@@ -77,7 +58,7 @@ Example: ignore data from fuel tank two:
 { "path": "tanks.fuel.2", "ignore": true }
 ```
 
-__log__\
+__Log time-series data?__ [log]\
 This boolean property specifies whether or not tank data from sources selected by __path__ should be logged. Because the paths available to Signal K are not necessarily always present this property should only be applied when the associated __path__ is fully qualified.
 
 __rrd__\
