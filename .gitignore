@@ -1,6 +1,7 @@
 # Generated files
 rrd/*
 graph/*
+config.js
 
 # Logs
 logs
