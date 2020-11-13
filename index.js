@@ -26,10 +26,6 @@ const PLUGIN_SCHEMA_FILE = __dirname + "/schema.json";
 const PLUGIN_UISCHEMA_FILE = __dirname + "/uischema.json";
 const APP_CONFIGURATION_FILE = __dirname + "/config.js";
 const DEBUG_KEYS = [ "rrd" ];
-const RRD_UPDATE_INTERVAL = 60000;
-const RRD_GRAPH_GENERATION_STEPS = { "day": 5, "week": 57, "month": 1401, "year": 3008 };
-const RRD_FOLDER = __dirname + "/rrd/"
-const RRD_GRAPH_FOLDER = __dirname + "/graph/";
 
 module.exports = function(app) {
   var plugin = {};
@@ -61,37 +57,39 @@ module.exports = function(app) {
       var tankPaths = options.tweaks.filter(t => ((!t.ignore) && (t.log))).map(t => (t.path + ".currentLevel"));
       if (tankPaths.length > 0) {
         log.N("logging %d data channels", tankPaths.length);
-        var rrdclient = new RrdClient((debug.enabled('rrd'))?{ debug: true }:{});
+        var rrdclient = new RrdClient((debug.enabled('rrd'))?{ debug: false }:{});
         var dbname = plugin.id + ".rrd";
+        var dbpathname = (options.rrdfolder.startsWith('/')?options.rrdfolder:(__dirname + "/" + options.rrdfolder)) + dbname;;
         var nowSeconds = Math.floor(Date.now() / 1000);
+        if (options.rrdcstring) log.N("connecting to RRD cache daemon on %s", options.rrdcstring);
         rrdclient.connect(options.rrdcstring, (d) => { debug.N("rrd", "%s", d); }).then(
           (socket) => {
-            if (socket) log.N("connected to RRD cache daemon on %s", options.rrdcstring);
             var step = options.rrdtool.create.options.reduce((a,v) => ((v.name == "-s")?v.value:a), null) || 60;
             var heartbeat = (step * 2);
             var dsdefs = tankPaths.map(p => { return("DS:" + dsName(p, options.tweaks) + ":GAUGE:" + heartbeat + ":0:100"); });
             rrdclient.create(dbname, options.rrdtool.create.options, dsdefs, options.rrdtool.create.rradefs).then(
               () => {
-                var stream = bacon.zipAsArray(tankPaths.map(p => app.streambundle.getSelfStream(p))).debounceImmediate(RRD_UPDATE_INTERVAL);
-                var step = 0;
+                var stream = bacon.zipAsArray(tankPaths.map(p => app.streambundle.getSelfStream(p))).debounceImmediate(step * 1000);
+                var updatecnt = 0;
                 unsubscribes.push(stream.onValue(v => {
-                  rrdclient.update(dbname, v.map(x => Math.floor((x * 100) + 0.5))).then(
-                    () => { }, // Success
-                    () => { }  // Failure
-                  );
-                  Object.keys(RRD_GRAPH_GENERATION_STEPS).forEach(period => {
-                    if ((step % RRD_GRAPH_GENERATION_STEPS[period]) == 0) {
-                      rrdclient.flush(dbname).then(
-                        () => {
-                          rrdclient.graph(
-                            __dirname + options.rrdtool.graph.folder + period + ".svg",
-                            graphArgs(period, options.rrdtool.graph.options, tankPaths, options.tweaks, options.rrdfolder + dbname));
-                        },
-                        () => { }
-                      );
-                    }
-                  });
-                  step++;
+                  rrdclient.update(dbname, v.map(x => Math.floor((x * 100) + 0.5))).then(() => { }, () => { });
+                  var graphs = options.rrdtool.graph.graphs.filter(g => (!(updatecnt % g.step)));
+                  if (graphs.length) {
+                    rrdclient.flush(dbname).then(
+                      () => {
+                        graphs.forEach(graphdef => {
+                          var pathname = __dirname + "/" + options.rrdtool.graph.folder + graphdef.filename;
+                          var args = graphArgs(graphdef, options.rrdtool.graph.options, tankPaths, options.tweaks, dbpathname, kellycolors.reset());
+                          rrdclient.graph(pathname, args).then(
+                            () => { debug.N("rrd", "success generating graph (%s)", JSON.stringify(graphdef)); },
+                            () => { debug.N("rrd", "error generating graph (%s)", JSON.stringify(graphdef)); }
+                          );
+                        });
+                      },
+                      () => { }
+                    );
+                  }
+                  updatecnt++;
                 }));
               },
               () => { log.N("create database failed"); }
@@ -128,14 +126,13 @@ module.exports = function(app) {
     return(retval);
   }
 
-  function graphArgs(period, options, paths, tweaks, dbname) {
-    var startcode = { "day": "end-1d", "week": "end-1w", "month": "end-1m", "year": "end-1y" };
-    var date = (new Date()).toISOString();
+  function graphArgs(graphdef, options, paths, tweaks, dbname, kellycolors) {
     var args = [];
 
+    graphdef.DATE = (new Date()).toISOString();
     options.forEach(option => {
       args.push(option.name);
-      args.push(option.value.replace("{PERIOD}", period).replace("{START}", startcode[period]).replace("{DATE}", date));
+      args.push(replaceTokens(option.value, graphdef));
     });
       
     paths.map(p => dsName(p, tweaks)).forEach(dsName => {
@@ -165,6 +162,11 @@ module.exports = function(app) {
       args.push("COMMENT:'\\n'");
     });
     return(args);
+  }
+ 
+  function replaceTokens(string, tokens) {
+    Object.keys(tokens).forEach(token => { string = string.replace("{" + token + "}", tokens[token]); });
+    return(string);
   }
 
   return(plugin);

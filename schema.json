@@ -36,8 +36,8 @@
       ]
     },
     "rrdenabled": { "type": "boolean", "title": "Enable time-series logging?", "default": false },
-    "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },
     "rrdfolder": { "type": "string", "title": "Folder where RRD files are stored" },
+    "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },
     "rrdtool" : {
       "type": "object",
       "properties": {
@@ -64,6 +64,19 @@
           "type": "object",
           "properties": {
             "folder": { "type": "string" },
+            "graphs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "filename": { "type": "string" },
+                  "title": { "type": "string" },
+                  "start": { "type": "string" },
+                  "end": { "type": "string" },
+                  "step": { "type": "number" }
+                }
+              }
+            },
             "options": {
               "type": "array",
               "items": {
@@ -79,14 +92,20 @@
       },
       "default": {
         "create": {
-          "options": [ { "name": "-s", "value": "60" } ],
+          "options": [ { "name": "-s", "value": "60" }, { "name": "-O", "value": "" } ],
           "rradefs": [ "RRA:AVERAGE:0.5:5m:1d", "RRA:AVERAGE:0.5:10m:1w", "RRA:AVERAGE:0.5:30m:1M", "RRA:AVERAGE:0.5:1h:1y" ]
         },
         "graph": {
           "folder": "graph/",
+          "graphs": [ 
+            { "filename": "day.svg", "title": "Tank levels over previous day", "start": "end-1d", "step": 5 },
+            { "filename": "week.svg", "title": "Tank levels over previous week", "start": "end-1w", "step": 57 },
+            { "filename": "month.svg", "title": "Tank levels over previous month", "start": "end-1M", "step": 1401 },
+            { "filename": "year.svg", "title": "Tank levels over previous year", "start": "end-1y", "step": 3006 }
+          ],
           "options": [
-            { "name": "--start", "value": "{START}" },
-            { "name": "--title", "value": "'Tank levels over previous {PERIOD}'" },
+            { "name": "--start", "value": "{start}" },
+            { "name": "--title", "value": "'{title}'" },
             { "name": "--vertical-label", "value": "'Percent capacity'" },
             { "name": "--width", "value": "800" },
             { "name": "--height", "value": "300" },
