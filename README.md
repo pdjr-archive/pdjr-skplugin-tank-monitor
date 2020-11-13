@@ -308,9 +308,11 @@ discharge pump is running (line 008).
 
 5. Log tank readings to a time-series database (line 017).
 
-6. I use a rrdcached(1) which placed tankmonitor.rrd in the specified folder (line 018).
+6. I use a rrdcached(1) which placed tankmonitor.rrd in the specified
+folder (line 018).
 
-7. Connect to a cacheing daemon litsening on the specified Unix domain socket (line 019).
+7. Connect to a cacheing daemon litsening on the specified Unix domain
+socket (line 019).
 
 ```
 001:     {
@@ -337,7 +339,6 @@ discharge pump is running (line 008).
              ...
              ...
 ```
-
 
 ## Author
 
