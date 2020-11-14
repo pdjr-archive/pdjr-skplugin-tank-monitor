@@ -7,7 +7,7 @@
       "items": {
         "type": "object",
         "properties": {
-          "path": { "type": "string", "title": "Apply this tweak to tank paths that begin with", "pattern": "^tanks\..*" },
+          "path": { "type": "string", "title": "Apply this tweak to tank paths that begin with", "pattern": "^tanks\\..*" },
           "ignore": { "type": "boolean", "title": "Ignore this data completely?", "default": false },
           "log": { "type": "boolean", "title": "Log time-series data?", "default": false },
           "name": { "type": "string", "title": "Use this fluid name instead of the Signal K default" },
@@ -122,6 +122,7 @@
             { "name": "--watermark", "value": "'Generated on {DATE}'" },
             { "name": "--slope-mode", "value": "" }
           ]
+        }
       }
     }
   }

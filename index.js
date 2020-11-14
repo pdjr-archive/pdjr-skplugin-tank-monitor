@@ -24,7 +24,7 @@ const DebugLog = require("./lib/signalk-liblog/DebugLog.js");
 
 const PLUGIN_SCHEMA_FILE = __dirname + "/schema.json";
 const PLUGIN_UISCHEMA_FILE = __dirname + "/uischema.json";
-const APP_CONFIGURATION_FILE = __dirname + "/config.js";
+const APP_CONFIGURATION_FILE = __dirname + "/config.json";
 const DEBUG_KEYS = [ "rrd" ];
 
 module.exports = function(app) {
@@ -51,7 +51,7 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
-    fs.writeFileSync(APP_CONFIGURATION_FILE, "CONFIG=" + JSON.stringify(options));
+    fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify({ "tweaks": options.tweaks }));
     if (options.rrdenabled) {
       log.N("time-series logging enabled");
       var tankPaths = options.tweaks.filter(t => ((!t.ignore) && (t.log))).map(t => (t.path + ".currentLevel"));
