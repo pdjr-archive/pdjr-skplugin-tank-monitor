@@ -51,7 +51,7 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
-    fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify({ "tweaks": options.tweaks }));
+    fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify(options));
     if (options.rrdenabled) {
       log.N("time-series logging enabled");
       var tankPaths = options.tweaks.filter(t => ((!t.ignore) && (t.log))).map(t => (t.path + ".currentLevel"));

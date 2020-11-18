@@ -6,7 +6,7 @@ __signalk-tank-monitor__ implements a webapp and plugin for the
 [Signal K Node server](https://github.com/SignalK/signalk-server-node).
 
 The webapp presents a simple bar-chart showing the levels of all tanks
-reported in Signal K.s
+available in Signal K.
 Signal K's plugin configuration interface can be used to customise the
 webapp display including by the addition of user-defined text and
 graphic alerts.
@@ -25,8 +25,7 @@ __signalk-tank-monitor__ has no special installation requirements.
 
 If you wish to log time-series tank data then
 [RRDTool](https://oss.oetiker.ch/rrdtool/)
-must either be installed on the local host or a available as a network
-service.
+must either be installed on the local host.
 
 ## Installation
 
@@ -37,27 +36,39 @@ The plugin can also be obtained from the
 and installed using
 [these instructions](https://github.com/SignalK/signalk-server-node/blob/master/SERVERPLUGINS.md).
 
+Restart Signal K after installation.
+
 ## Using the plugin
 
-The plugin is enabled by default and after installation you should be
-able to immediately view all tank data available in Signal K by
-selecting *Signalk-Tank-Monitor* in your host server's *Webapps*
-interface.
+You should be able to immediately view all tank data available in
+Signal K by opening the *Signalk-Tank-Monitor* webapp from your host
+server's *Webapps* interface.
+
+Time-series logging is disabled iby default.
+In this case, the plugin simply checks its configuration and exits,
+placing no burden on the host server. 
+
+When time-series logging is enabled, the plugin periodically records
+tank data and clicking anywhere in the webapp display will open a
+graphical rendering of historic tank data.
+Clicking in the displayed graph will dismiss its display; clicking the
+right and left margins cycles through the available graph timescales.
 
 ## Configuration
 
-The behaviour of __signalk-tank-monitor__ and the appearance of the
-generated web page can be adjusted using the configuration interface at
-*Server->Plugin Config->Tank monitor*.
+The appearance of the webapp and the behaviour of
+__signalk-tank-monitor__ can be adjusted using the configuration
+interface at *Server->Plugin Config->Tank monitor*.
 
-Configuration of the plugin involves specifying one or more *tweaks*
-each of which is a collection of configuration properties.
+Configuration of the plugin involves specifying one or more *tweaks*.
+which collectively modify the handling of one or more tank data
+streams.
+
 A tweak is either global in scope (that is it applies to every tank
 data stream) or specialised so that it applies to only a restricted
 number (perhaps just a single) data stream.
-Specialisation is achieved by including a __path__ property within as
-tweak which defines the restriction that should be imposed on all other
-tweak properties.
+Specialisation is achieved by including a __path__ property within a
+tweak which defines the scope of application of any other properties.
 Specialised tweak's exert more influence than their less specialised
 siblings.
 For example, the following pair of tweaks sets the display color of all

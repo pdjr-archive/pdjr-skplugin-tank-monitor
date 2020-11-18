@@ -29,7 +29,7 @@
         }
       },
       "default": [
-        { "color": "#00FFFF" },
+        { "color": "#00FFFF", "factor": 1000, "places": 0 },
         { "path": "tanks.fuel", "name": "Fuel" },
         { "path": "tanks.freshWater", "name": "Water" },
         { "path": "tanks.wasteWater", "name": "Waste" }
