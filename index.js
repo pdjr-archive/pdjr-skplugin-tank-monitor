@@ -20,6 +20,7 @@ const RrdClient = require('./lib/librrdclient/RrdClient.js');
 const KellyColors = require("./lib/libkellycolors/KellyColors.js");
 const Schema = require("./lib/signalk-libschema/Schema.js");
 const Log = require("./lib/signalk-liblog/Log.js");
+const Delta = require("./lib/signalk-libdelta/Delta.js");
 const DebugLog = require("./lib/signalk-liblog/DebugLog.js");
 
 const PLUGIN_SCHEMA_FILE = __dirname + "/schema.json";
@@ -39,6 +40,7 @@ module.exports = function(app) {
   const kellycolors = new KellyColors();
   const log = new Log(plugin.id, { ncallback: app.setPluginStatus, ecallback: app.setPluginError });
   const debug = new DebugLog(plugin.id, DEBUG_KEYS);
+  const delta = new Delta(app, plugin.id);
 
   plugin.schema = function() {
     var schema = Schema.createSchema(PLUGIN_SCHEMA_FILE);
@@ -51,24 +53,21 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
-    var deltas = options
-      .tweaks.map(t => t.path)
-      .filter(p => ((p) && (/^tanks\..+\.\d+/.test(p))))
-      .map(p => { var t = getTweak(p, options.tweaks); t.path = p; return(t); })
-      .forEach(t => {
-        var matches = t.path.match(/^tanks\.(.*)\.(\d+)/);
-        var tank = (matches)?("Tank " + matches[2]):"";
-        var name = (t.name)?t.name:((matches)?matches[1]:"");
-        var metaPath = app.getPath("self") + "." + t.path + ".currentLevel";
-        var metaValue = {
-          "description": "Level of fluid in tank (0 - 100%)",
-          "units" : "ratio",
-          "displayName" : tank + " (" + name + ")",
-          "longName" : tank + " (" + name + ")",
-          "shortName" : tank
-        }
-        app.handleMessage(plugin.id, staticDelta(metaPath, "meta", metaValue));
+    options.tweaks.map(t => t.path).filter(p => ((p) && (/^tanks\..+\.\d+/.test(p))))
+    .map(p => { var t = getTweak(p, options.tweaks); t.path = p; return(t); })
+    .forEach(t => {
+      var matches = t.path.match(/^tanks\.(.*)\.(\d+)/);
+      var tank = (matches)?("Tank " + matches[2]):"";
+      var name = (t.name)?t.name:((matches)?matches[1]:"");
+      delta.addMeta(t.path + ".currentLevel", {
+        "description": "Level of fluid in tank (0 - 100%)",
+        "units" : "ratio",
+        "displayName" : tank + " (" + name + ")",
+        "longName" : tank + " (" + name + ")",
+        "shortName" : tank
       });
+    });
+    delta.commit();
 
     fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify(options));
     if (options.rrdenabled) {
