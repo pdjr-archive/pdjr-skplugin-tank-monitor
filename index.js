@@ -51,6 +51,25 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
+    var deltas = options
+      .tweaks.map(t => t.path)
+      .filter(p => ((p) && (/^tanks\..+\.\d+/.test(p))))
+      .map(p => { var t = getTweak(p, options.tweaks); t.path = p; return(t); })
+      .forEach(t => {
+        var matches = t.path.match(/^tanks\.(.*)\.(\d+)/);
+        var tank = (matches)?("Tank " + matches[2]):"";
+        var name = (t.name)?t.name:((matches)?matches[1]:"");
+        var metaPath = app.getPath("self") + "." + t.path + ".currentLevel";
+        var metaValue = {
+          "description": "Level of fluid in tank (0 - 100%)",
+          "units" : "ratio",
+          "displayName" : tank + " (" + name + ")",
+          "longName" : tank + " (" + name + ")",
+          "shortName" : tank
+        }
+        app.handleMessage(plugin.id, staticDelta(metaPath, "meta", metaValue));
+      });
+
     fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify(options));
     if (options.rrdenabled) {
       log.N("time-series logging enabled");
@@ -167,6 +186,30 @@ module.exports = function(app) {
   function replaceTokens(string, tokens) {
     Object.keys(tokens).forEach(token => { string = string.replace("{" + token + "}", tokens[token]); });
     return(string);
+  }
+
+  /********************************************************************
+   * Return a delta from <pairs> which can be a single value of the
+   * form { path, value } or an array of such values. <src> is the name
+   * of the process which will issue the delta update.
+   */
+
+  function makeDelta(src, pairs = []) {
+    pairs = (Array.isArray(pairs))?pairs:[pairs]; 
+    return({
+      "updates": [{
+        "source": { "type": "plugin", "src": src, },
+        "timestamp": (new Date()).toISOString(),
+        "values": pairs
+      }]
+    });
+  }
+
+  function staticDelta(fullpath, key, value) {
+    return({
+      "context": fullpath,
+      "updates": [ { "values": [ { "path": "", "value": { [key]: value } } ] } ] 
+    });
   }
 
   return(plugin);
