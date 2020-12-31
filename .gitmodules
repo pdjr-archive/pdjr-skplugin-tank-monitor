@@ -34,3 +34,6 @@
 [submodule "public/lib/signalk-tanklevel-widget"]
 	path = public/lib/signalk-tanklevel-widget
 	url = https://github.com/preeve9534/signalk-tanklevel-widget
+[submodule "public/lib/signalk-alarm-widget"]
+	path = public/lib/signalk-alarm-widget
+	url = https://github.com/preeve9534/signalk-alarm-widget
