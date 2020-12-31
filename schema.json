@@ -1,40 +1,8 @@
 {
   "type": "object",
   "properties": {
-    "tweaks": {
-      "title": "Tweaks...",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "path": { "type": "string", "title": "Apply this tweak to tank paths that begin with", "pattern": "^tanks\\..*" },
-          "ignore": { "type": "boolean", "title": "Ignore this data completely?", "default": false },
-          "log": { "type": "boolean", "title": "Log time-series data?", "default": false },
-          "name": { "type": "string", "title": "Use this fluid name instead of the Signal K default" },
-          "color": { "type": "string", "title": "Use this color for rendering data" },
-          "factor": { "type": "number", "title": "Multiply all data values by this factor", "exclusiveMinimum": 0 },
-          "places": { "type": "number", "title": "Restrict data value to this many decimal places", "minimum": 0 },
-          "labels": {
-            "type": "array",
-            "default": [],
-            "items": {
-              "type": "object",
-              "title": "Apply this label",
-              "properties": {
-                "content": { "type": "string", "title": "Use this text (or this icon)" },
-                "trigger": { "type": "string", "title": "Trigger label display only when this condition is true" }
-              }
-            }
-          }
-        }
-      },
-      "default": [
-        { "color": "#00FFFF", "factor": 1000, "places": 0 },
-        { "path": "tanks.fuel", "name": "Fuel" },
-        { "path": "tanks.freshWater", "name": "Water" },
-        { "path": "tanks.wasteWater", "name": "Waste" }
-      ]
-    },
+    "display": { "type": "array", "items": { "type": "string" } },
+    "log": { "type": "array", "items": { "type": "string" } },
     "rrdenabled": { "type": "boolean", "title": "Enable time-series logging?", "default": false },
     "rrdfolder": { "type": "string", "title": "Folder where RRD files are stored" },
     "rrdcstring": { "type": "string", "title": "Connect to the RRD daemon at" },

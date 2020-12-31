@@ -31,7 +31,6 @@ const DEBUG_KEYS = [ "rrd" ];
 module.exports = function(app) {
   var plugin = {};
   var unsubscribes = [];
-  var switchbanks = {};
 
   plugin.id = "tankmonitor";
   plugin.name = "Tank monitor";
@@ -53,29 +52,12 @@ module.exports = function(app) {
   }
 
   plugin.start = function(options) {
-    options.tweaks.map(t => t.path).filter(p => ((p) && (/^tanks\..+\.\d+/.test(p))))
-    .map(p => { var t = getTweak(p, options.tweaks); t.path = p; return(t); })
-    .forEach(t => {
-      var matches = t.path.match(/^tanks\.(.*)\.(\d+)/);
-      var tank = (matches)?("Tank " + matches[2]):"";
-      var name = (t.name)?t.name:((matches)?matches[1]:"");
-      delta.addMeta(t.path + ".currentLevel", {
-        "description": "Level of fluid in tank (0 - 100%)",
-        "units" : "ratio",
-        "displayName" : tank + " (" + name + ")",
-        "longName" : tank + " (" + name + ")",
-        "shortName" : tank
-      });
-    });
-    delta.commit();
 
-    fs.writeFileSync(APP_CONFIGURATION_FILE, JSON.stringify(options));
     if (options.rrdenabled) {
       log.N("time-series logging enabled");
-      var tankPaths = options.tweaks.filter(t => ((!t.ignore) && (t.log))).map(t => (t.path + ".currentLevel"));
-      if (tankPaths.length > 0) {
-        log.N("logging %d data channels", tankPaths.length);
-        var rrdclient = new RrdClient((debug.enabled('rrd'))?{ debug: false }:{});
+      if ((options.log) && (options.log.length > 0)) {
+        log.N("logging %d data channels", options.log.length);
+        var rrdclient = new RrdClient((debug.enabled('rrd'))?{ debug: true }:{});
         var dbname = plugin.id + ".rrd";
         var dbpathname = (options.rrdfolder.startsWith('/')?options.rrdfolder:(__dirname + "/" + options.rrdfolder)) + dbname;;
         var nowSeconds = Math.floor(Date.now() / 1000);
@@ -84,10 +66,10 @@ module.exports = function(app) {
           (socket) => {
             var step = options.rrdtool.create.options.reduce((a,v) => ((v.name == "-s")?v.value:a), null) || 60;
             var heartbeat = (step * 2);
-            var dsdefs = tankPaths.map(p => { return("DS:" + dsName(p, options.tweaks) + ":GAUGE:" + heartbeat + ":0:100"); });
+            var dsdefs = options.log.map(p => { return("DS:" + dsName(p) + ":GAUGE:" + heartbeat + ":0:100"); });
             rrdclient.create(dbname, options.rrdtool.create.options, dsdefs, options.rrdtool.create.rradefs).then(
               () => {
-                var stream = bacon.zipAsArray(tankPaths.map(p => app.streambundle.getSelfStream(p))).debounceImmediate(step * 1000);
+                var stream = bacon.zipAsArray(options.log.map(p => app.streambundle.getSelfStream(p + ".currentLevel"))).debounceImmediate(step * 1000);
                 var updatecnt = 0;
                 unsubscribes.push(stream.onValue(v => {
                   rrdclient.update(dbname, v.map(x => Math.floor((x * 100) + 0.5))).then(() => { }, () => { });
@@ -97,7 +79,7 @@ module.exports = function(app) {
                       () => {
                         graphs.forEach(graphdef => {
                           var pathname = __dirname + "/" + options.rrdtool.graph.folder + graphdef.filename;
-                          var args = graphArgs(graphdef, options.rrdtool.graph.options, tankPaths, options.tweaks, dbpathname, kellycolors.reset());
+                          var args = graphArgs(graphdef, options.rrdtool.graph.options, options.log, dbpathname, kellycolors.reset());
                           rrdclient.graph(pathname, args).then(
                             () => { debug.N("rrd", "success generating graph (%s)", JSON.stringify(graphdef)); },
                             () => { debug.N("rrd", "error generating graph (%s)", JSON.stringify(graphdef)); }
@@ -128,23 +110,12 @@ module.exports = function(app) {
     var unsubscribes = [];
   }
 
-  function dsName(path, tweaks) {
-    var tweak = getTweak(path, tweaks);
+  function dsName(path) {
     var parts = path.split('.');
-    return("T" + ((parts[2].length == 1)?"0":"") + parts[2] + ((tweak.name)?tweak.name:parts[1]));
+    return("Tank." + parts[2]);
   }
 
-  function getTweak(path, tweaks) { 
-    var retval = tweaks.sort((a,b) => (a.path === undefined)?-1:((b.path === undefined)?+1:(a.path.length - b.path.length))).reduce((a, v) => {
-      if ((v.path == undefined) || path.startsWith(v.path)) {
-        Object.keys(v).filter(k => (k != 'path')).forEach(k => { a[k] = v[k]; });
-      }
-      return(a);
-    }, {});
-    return(retval);
-  }
-
-  function graphArgs(graphdef, options, paths, tweaks, dbname, kellycolors) {
+  function graphArgs(graphdef, options, paths, dbname, kellycolors) {
     var args = [];
 
     graphdef.DATE = (new Date()).toISOString();
@@ -153,7 +124,7 @@ module.exports = function(app) {
       args.push(replaceTokens(option.value, graphdef));
     });
       
-    paths.map(p => dsName(p, tweaks)).forEach(dsName => {
+    paths.map(p => dsName(p)).forEach(dsName => {
       args.push("DEF:" + dsName  + "=" + dbname + ":" + dsName + ":AVERAGE");
       args.push("VDEF:" + dsName + "min=" + dsName + ",MINIMUM");
       args.push("VDEF:" + dsName + "max=" + dsName + ",MAXIMUM");
@@ -169,9 +140,8 @@ module.exports = function(app) {
     args.push("COMMENT:'\\n'");
 
     paths.forEach(p => {
-      var tweak = getTweak(p, tweaks);
-      var dsname = dsName(p, tweaks);
-      var color = (tweak.color.split(',').length == 2)?tweak.color.split(',')[1]:kellycolors.getColor();
+      var dsname = dsName(p);
+      var color = kellycolors.getColor();
       args.push("LINE1:" + dsname + color + ":'" + dsname.padEnd(13) + "'");
       args.push("GPRINT:" + dsname + "min:'%10.0lf'");
       args.push("GPRINT:" + dsname + "max:'%10.0lf'");
@@ -185,30 +155,6 @@ module.exports = function(app) {
   function replaceTokens(string, tokens) {
     Object.keys(tokens).forEach(token => { string = string.replace("{" + token + "}", tokens[token]); });
     return(string);
-  }
-
-  /********************************************************************
-   * Return a delta from <pairs> which can be a single value of the
-   * form { path, value } or an array of such values. <src> is the name
-   * of the process which will issue the delta update.
-   */
-
-  function makeDelta(src, pairs = []) {
-    pairs = (Array.isArray(pairs))?pairs:[pairs]; 
-    return({
-      "updates": [{
-        "source": { "type": "plugin", "src": src, },
-        "timestamp": (new Date()).toISOString(),
-        "values": pairs
-      }]
-    });
-  }
-
-  function staticDelta(fullpath, key, value) {
-    return({
-      "context": fullpath,
-      "updates": [ { "values": [ { "path": "", "value": { [key]: value } } ] } ] 
-    });
   }
 
   return(plugin);

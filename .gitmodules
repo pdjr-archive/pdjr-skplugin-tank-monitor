@@ -1,6 +1,3 @@
-[submodule "lib/signalk-libsignalkclient"]
-	path = lib/signalk-libsignalkclient
-	url = https://github.com/preeve9534/signalk-libsignalkclient.git
 [submodule "lib/page-utils"]
 	path = lib/page-utils
 	url = https://github.com/preeve9534/page-utils.git
@@ -19,3 +16,21 @@
 [submodule "lib/signalk-libdelta"]
 	path = lib/signalk-libdelta
 	url = https://github.com/preeve9534/signalk-libdelta
+[submodule "lib/signalk-libmeta"]
+	path = lib/signalk-libmeta
+	url = https://github.com/preeve9534/signalk-libmeta
+[submodule "lib/signalk-libalarmclient"]
+	path = lib/signalk-libalarmclient
+	url = https://github.com/preeve9534/signalk-libalarmclient
+[submodule "public/lib/page-utils"]
+	path = public/lib/page-utils
+	url = https://github.com/preeve9534/page-utils
+[submodule "public/lib/signalk-libsignalkclient"]
+	path = public/lib/signalk-libsignalkclient
+	url = https://github.com/preeve9534/signalk-libsignalkclient
+[submodule "public/lib/signalk-libalarmclient"]
+	path = public/lib/signalk-libalarmclient
+	url = https://github.com/preeve9534/signalk-libalarmclient
+[submodule "public/lib/signalk-tanklevel-widget"]
+	path = public/lib/signalk-tanklevel-widget
+	url = https://github.com/preeve9534/signalk-tanklevel-widget
