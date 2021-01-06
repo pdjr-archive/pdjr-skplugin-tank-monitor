@@ -1,8 +1,8 @@
-# signalk-tank-monitor
+# pdjr-skplugin-tank-monitor
 
 Display tank levels.
 
-__signalk-tank-monitor__ implements a webapp and plugin for the
+__pdjr-skplugin-tank-monitor__ implements a webapp and plugin for the
 [Signal K Node server](https://github.com/SignalK/signalk-server-node).
 
 The webapp presents a simple bar-chart showing the levels of all tanks
@@ -21,7 +21,7 @@ $![Specimen screenshot](screenshot.png)
 
 ## System requirements
 
-__signalk-tank-monitor__ has no special installation requirements.
+__pdjr-skplugin-tank-monitor__ has no special installation requirements.
 
 If you wish to log time-series tank data then
 [RRDTool](https://oss.oetiker.ch/rrdtool/)
@@ -29,10 +29,10 @@ must either be installed on the local host.
 
 ## Installation
 
-Download and install __signalk-tank-monitor__ using the *Appstore* menu
+Download and install __pdjr-skplugin-tank-monitor__ using the *Appstore* menu
 option in your Signal K Node server console.
 The plugin can also be obtained from the
-[project homepage](https://github.com/preeve9534/signalk-tank-monitor)
+[project homepage](https://github.com/preeve9534/pdjr-skplugin-tank-monitor)
 and installed using
 [these instructions](https://github.com/SignalK/signalk-server-node/blob/master/SERVERPLUGINS.md).
 
@@ -57,7 +57,7 @@ right and left margins cycles through the available graph timescales.
 ## Configuration
 
 The appearance of the webapp and the behaviour of
-__signalk-tank-monitor__ can be adjusted using the configuration
+__pdjr-skplugin-tank-monitor__ can be adjusted using the configuration
 interface at *Server->Plugin Config->Tank monitor*.
 
 Configuration of the plugin involves specifying one or more *tweaks*.
@@ -228,7 +228,7 @@ If you want to use this feature, then take note of the installation
 requirements discussed above.
 
 Data logging is disabled by default.
-Once enabled, __signalk-tank-monitor__ will create a database if none
+Once enabled, __pdjr-skplugin-tank-monitor__ will create a database if none
 exists but it will not delete an existing database.
 This conservative behaviour is a problem if you decide to modify your
 logged database configuration by adding to, removing from, or renaming

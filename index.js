@@ -32,7 +32,7 @@ module.exports = function(app) {
   var plugin = {};
   var unsubscribes = [];
 
-  plugin.id = "tankmonitor";
+  plugin.id = "pdjr-skplugin-tank-monitor";
   plugin.name = "Tank monitor";
   plugin.description = "Monitor tank levels.";
 

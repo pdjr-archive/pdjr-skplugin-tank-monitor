@@ -1,5 +1,5 @@
 {
-  "name": "signalk-tank-monitor",
+  "name": "pdjr-skplugin-tank-monitor",
   "version": "1.0.0",
   "description": "Signal K tank monitor.",
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/preeve9534/signalk-tank-monitor.git"
+    "url": "git+https://github.com/preeve9534/pdjr-skplugin-tank-monitor.git"
   },
   "keywords": [
     "signalk-node-server-plugin",
@@ -19,9 +19,9 @@
   "author": "Paul Reeve <preeve@pdjr.eu>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/preeve9534/signalk-tank-monitor/issues"
+    "url": "https://github.com/preeve9534/pdjr-skplugin-tank-monitor/issues"
   },
-  "homepage": "https://github.com/preeve9534/signalk-tank-monitor#readme",
+  "homepage": "https://github.com/preeve9534/pdjr-skplugin-tank-monitor#readme",
   "dependencies": {
     "baconjs": "^1.0.1",
     "node-rrdtool": "^0.1.3",
